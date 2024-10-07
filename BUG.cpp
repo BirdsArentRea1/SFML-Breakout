@@ -75,39 +75,66 @@ public:
 	bool brickCollision(Brick& brick) {
 		return brick.checkCollision(xpos + radius, ypos + radius, radius);
 
-	}
-	void draw(sf::RenderWindow& window) {
+		bool paddleCollision(Paddle) {
+			return Paddle.checkCollision(xpos, ypos);
 
-		window.draw(shape);
+		}
+		void draw(sf::RenderWindow & window) {
 
-	}
-};
+			window.draw(shape);
 
-class Paddle {
-private:
-	float width;
-	float height;
-	float xpos;
-	float ypos;
-	sf::RectangleShape shape;
+		}
+	};
 
-public:
-	Paddle(float x, float y, float w, float h) {
-		xpos = x;
-		ypos = y;
-		width = w;
-		height = h;
+	class Paddle {
+	private:
+		float width;
+		float height;
+		float xpos;
+		float ypos;
+		float speed;
+		sf::RectangleShape shape;
 
-		shape.setSize(sf::Vector2f(width, height));
-		shape.setPosition(xpos, ypos);
-		shape.setFillColor(sf::Color::Blue);
-	}
-	void draw(sf::RenderWindow& window) {
-		window.draw(shape);
-	}
+	public:
+		Paddle(float x, float y, float w, float h) {
+			xpos = x;
+			ypos = y;
+			width = w;
+			height = h;
+			speed = 0.3;
+
+			shape.setSize(sf::Vector2f(width, height));
+			shape.setPosition(xpos, ypos);
+			shape.setFillColor(sf::Color::Blue);
+		}
+
+		void moveRight() {
+			xpos += speed;
+			if (xpos < 0) xpos = 0;
+			shape.setPosition(xpos, ypos);
+		}
+
+		void moveLeft() {
+			xpos -= speed;
+			if (xpos < 0) xpos = 0;
+			shape.setPosition(xpos, ypos);
+		}
+
+		bool checkCollision(float x, float y, float w, float h) {
+			x > xpos&& x < xpos + width &&
+				y > ypos&& y < ypos + height) {
+					return true;
+		}
+		return false;
+		}
+
+		void draw(sf::RenderWindow& window) {
+			window.draw(shape);
+		}
+	};
 
 	int main() {
-		sf::RenderWindow window(sf::VideoMode(800, 600), "BREACKOUT");
+		sf::RenderWindow window(sf::VideoMode(800, 600), "BREAKOUT");
 
 		Brick brick1(100, 100, 50, 20);
 		Brick brick2(160, 100, 50, 20);
@@ -152,13 +179,26 @@ public:
 				if (event.type == sf::Event::Closed)
 					window.close();
 			}
+
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+				Paddle.moveRight();
+			}
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+				Paddle.moveLeft();
+			}
+
 			//physics
 			ball.brickCollision(brick1);
 			ball.brickCollision(brick2);
 			ball.brickCollision(brick3);
 
+			Paddle.paddleCollision(Paddle);
 
 			//render
+			window.clear();
+
 			ball.draw(window);
 			Paddle.draw(window);
 
@@ -198,4 +238,3 @@ public:
 
 		return 0;
 	}// end main
-};
