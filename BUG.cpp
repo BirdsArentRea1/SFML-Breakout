@@ -75,8 +75,8 @@ public:
 	bool brickCollision(Brick& brick) {
 		return brick.checkCollision(xpos + radius, ypos + radius, radius);
 
-		bool paddleCollision(Paddle) {
-			return Paddle.checkCollision(xpos, ypos);
+	bool paddleCollision(Paddle) {
+		return Paddle.checkCollision(xpos, ypos);
 
 		}
 		void draw(sf::RenderWindow & window) {
@@ -120,9 +120,9 @@ public:
 			shape.setPosition(xpos, ypos);
 		}
 
-		bool checkCollision(float x, float y, float w, float h) {
-			x > xpos&& x < xpos + width &&
-				y > ypos&& y < ypos + height) {
+		bool checkCollision(float paddleX, float paddleY, float paddleW, float paddleH) {
+			paddleX > xpos && paddleX < xpos + paddleW &&
+			paddleY > ypos && paddleY < ypos + paddleH) {
 					return true;
 		}
 		return false;
