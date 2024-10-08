@@ -187,7 +187,7 @@ int main() {
 	Brick brick30(640, 156, 50, 20);
 
 	Ball ball(200, 200, 10, 10);
-	Paddle Paddle(300, 300, 20, 20);
+	Paddle Paddle(500, 500, 180, 20);
 
 
 
