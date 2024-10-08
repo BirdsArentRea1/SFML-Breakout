@@ -123,7 +123,7 @@ public:
 		bool checkCollision(float paddleX, float paddleY, float paddleW, float paddleH) {
 			paddleX > xpos && paddleX < xpos + paddleW &&
 			paddleY > ypos && paddleY < ypos + paddleH) {
-					return true;
+			return true;
 		}
 		return false;
 		}
