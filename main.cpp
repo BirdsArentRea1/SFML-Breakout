@@ -1,5 +1,8 @@
 #include <SFML/Graphics.hpp>
 
+//#include<iostream>
+//using namespace std;
+#include <stdlib.h>
 
 class Brick {
 private:
@@ -57,20 +60,28 @@ public:
 	Ball(float x, float y, float w, float h) {
 		xpos = x;
 		ypos = y;
-		xvel = 5;
-		yvel = 5;
-		radius = 20;
+		xvel = 0.3;
+		yvel = 0.3;
+		radius = 15;
 
 		shape.setRadius(radius);
 		shape.setPosition(xpos, ypos);
 		shape.setFillColor(sf::Color::White);
 	}
 	void move(float windowWidth, float windowHeight) {
-		xpos += xvel;
-
+		xpos += xvel*0.7;
+		ypos += yvel;
+		//cout << "xpos is"<<xpos << endl;
+		
 		if (xpos <= 0 || xpos + radius * 2 >= windowWidth) {
 			xvel = -xvel;
 		}
+		
+		if (ypos <= 0 || ypos + radius * 2 >= windowWidth) {
+			yvel = -yvel;
+		}
+
+		shape.setPosition(xpos, ypos);
 	}
 	bool brickCollision(Brick& brick) {
 		return brick.checkCollision(xpos + radius, ypos + radius, radius);
@@ -83,8 +94,12 @@ public:
 	}*/
 
 	bool paddleCollision(int PaddleX, int PaddleY, int PaddleW, int PaddleH) {
+		/*system("CLS");
+		printf("Ball: X: %f, Y: %f, \nPaddle: X:%d, Y:%d\nballY > paddleY: xpos + radius > PaddleX: %d\nxpos - radius < PaddleX + PaddleW: %d\nypos + radius > PaddleY && ypos: %d\nypos - radius < PaddleY + PaddleH: %d",
+			xpos, ypos, PaddleX, PaddleY, xpos + radius > PaddleX, xpos - radius < PaddleX + PaddleW, ypos + radius > PaddleY, ypos - radius < PaddleY + PaddleH);*/
 		if (xpos + radius > PaddleX && xpos - radius < PaddleX + PaddleW &&
 			ypos + radius > PaddleY && ypos - radius < PaddleY + PaddleH) {
+			yvel *= -1;
 			return true;
 		}
 		return false;
@@ -124,7 +139,7 @@ public:
 
 	void moveRight() {
 		xpos += speed;
-		if (xpos < 0) xpos = 0;
+		if (xpos > 620) xpos = 620;
 		shape.setPosition(xpos, ypos);
 	}
 
@@ -186,8 +201,8 @@ int main() {
 	Brick brick29(580, 156, 50, 20);
 	Brick brick30(640, 156, 50, 20);
 
-	Ball ball(200, 200, 10, 10);
-	Paddle Paddle(500, 500, 180, 20);
+	Ball ball(400, 400, 10, 10);
+	Paddle Paddle(300, 550, 180, 20);
 
 
 
@@ -212,7 +227,36 @@ int main() {
 		ball.brickCollision(brick1);
 		ball.brickCollision(brick2);
 		ball.brickCollision(brick3);
+		ball.brickCollision(brick4);
+		ball.brickCollision(brick5);
+		ball.brickCollision(brick6);
+		ball.brickCollision(brick7);
+		ball.brickCollision(brick8);
+		ball.brickCollision(brick9);
+		ball.brickCollision(brick10);
+		ball.brickCollision(brick11);
+		ball.brickCollision(brick12);
+		ball.brickCollision(brick13);
+		ball.brickCollision(brick14);
+		ball.brickCollision(brick15);
+		ball.brickCollision(brick16);
+		ball.brickCollision(brick17);
+		ball.brickCollision(brick18);
+		ball.brickCollision(brick19);
+		ball.brickCollision(brick20);
+		ball.brickCollision(brick21);
+		ball.brickCollision(brick22);
+		ball.brickCollision(brick23);
+		ball.brickCollision(brick24);
+		ball.brickCollision(brick25);
+		ball.brickCollision(brick26);
+		ball.brickCollision(brick27);
+		ball.brickCollision(brick28);
+		ball.brickCollision(brick29);
+		ball.brickCollision(brick30);
 
+		
+		ball.move(800,600);
 		ball.paddleCollision(Paddle.getX(), Paddle.getY(), Paddle.getW(), Paddle.getH());
 
 		//render
